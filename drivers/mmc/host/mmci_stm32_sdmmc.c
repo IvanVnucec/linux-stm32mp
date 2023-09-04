@@ -254,6 +254,9 @@ static void mmci_sdmmc_set_clkreg(struct mmci_host *host, unsigned int desired)
 	    host->mmc->ios.timing == MMC_TIMING_UHS_DDR50)
 		ddr = MCI_STM32_CLK_DDR;
 
+	if (host->highspeed_quirk == true && desired < 12000000)
+		desired = 12000000;
+
 	/*
 	 * cclk = mclk / (2 * clkdiv)
 	 * clkdiv 0 => bypass
