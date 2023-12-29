@@ -1225,6 +1225,7 @@ dtb-$(CONFIG_ARCH_STM32) += \
 	stm32mp157a-ed1.dtb \
 	stm32mp157a-ev1.dtb \
 	stm32mp157a-som.dtb \
+	stm32mp157d-som.dtb \
 	stm32mp157a-ev1-a7-examples.dtb \
 	stm32mp157a-ev1-m4-examples.dtb \
 	stm32mp157a-iot-box.dtb \
