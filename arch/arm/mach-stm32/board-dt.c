@@ -36,7 +36,8 @@ static int ar8031_phy_fixup(struct phy_device *dev)
 {
 	u16 val;
 
-	if (of_machine_is_compatible("emcraft,stm32mp1-som")) {
+	if (of_machine_is_compatible("emcraft,stm32mp1-som") ||
+	    of_machine_is_compatible("emcraft,stm32mp157d-som")) {
 		/* enable rgmii rxc skew and phy mode select to RGMII copper */
 		phy_write(dev, 0x1d, 0x1f);
 		phy_write(dev, 0x1e, 0x8);
