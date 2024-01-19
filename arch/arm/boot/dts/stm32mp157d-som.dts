@@ -645,6 +645,12 @@
 	/delete-property/dmas;
 	/delete-property/dma-names;
 	status = "okay";
+	clock-frequency = <1000000>;
+
+	tpm@2e {
+		reg = <0x2e>;
+		compatible = "tcg,tpm_tis-i2c";
+	};
 };
 
 &i2c5 {
