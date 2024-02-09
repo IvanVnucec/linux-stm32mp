@@ -374,24 +374,34 @@
 	status = "okay";
 };
 
+&sdmmc1_b4_pins_a {
+        pins1 {
+                slew-rate = <0>;
+                bias-pull-up;
+                /delete-property/bias-disable;
+        };
+        pins2 {
+                slew-rate = <0>;
+                bias-pull-up;
+                /delete-property/bias-disable;
+        };
+};
+
 &sdmmc1 {
 	pinctrl-names = "default", "opendrain", "sleep";
-	pinctrl-0 = <&sdmmc1_b4_pins_a &sdmmc1_dir_pins_a>;
-	pinctrl-1 = <&sdmmc1_b4_od_pins_a &sdmmc1_dir_pins_a>;
-	pinctrl-2 = <&sdmmc1_b4_sleep_pins_a &sdmmc1_dir_sleep_pins_a>;
+	pinctrl-0 = <&sdmmc1_b4_pins_a>;
+	pinctrl-1 = <&sdmmc1_b4_od_pins_a>;
+	pinctrl-2 = <&sdmmc1_b4_sleep_pins_a>;
+
+	cd-gpios = <&gpiog 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 
 	vmmc-supply = <&v3v3>;
-	vqmmc-supply = <&vdd>;
 
-	broken-cd;
+	no-1-8-v;
 	disable-wp;
-	st,sig-dir;
+	st,sdcard_highspeed_quirk;
 	st,neg-edge;
 	bus-width = <4>;
-	sd-uhs-sdr12;
-	sd-uhs-sdr25;
-	sd-uhs-sdr50;
-	sd-uhs-ddr50;
 	status = "okay";
 };
 
