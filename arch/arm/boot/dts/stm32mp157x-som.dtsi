@@ -231,7 +231,6 @@
 			regulator-max-microvolt = <5000000>;
 			gpio = <&gpiod 14 GPIO_ACTIVE_HIGH>;
 			enable-active-high;
-			regulator-always-on;
                 };
 
 		usb_otg1_vbus: usb-otg1-regulator {
@@ -241,7 +240,6 @@
 			regulator-max-microvolt = <5000000>;
 			gpio = <&gpioa 15 GPIO_ACTIVE_HIGH>;
 			enable-active-high;
-			regulator-always-on;
 		};
 
 		v3v3: v3v3 {
@@ -452,14 +450,14 @@
 	hub@1 {
 		compatible = "usb424,2514";
 		reg = <1>;
-		vdd-supply = <&v3v3>;
+		vdd-supply = <&usb_host_vbus>;
 	};
 };
 
 &usbotg_hs {
 	pinctrl-0 = <&usbotg_hs_pins_a>;
 	pinctrl-names = "default";
-	vbus-supply = <&v3v3>;
+	vbus-supply = <&usb_otg1_vbus>;
 	phys = <&usbphyc_port1 0>;
 	phy-names = "usb2-phy";
 	status = "okay";
@@ -486,7 +484,7 @@
 };
 
 &usbphyc_port1 {
-	phy-supply = <&usb_otg1_vbus>;
+	phy-supply = <&v3v3>;
 	st,tune-hs-dc-level = <2>;
 	st,enable-fs-rftime-tuning;
 	st,enable-hs-rftime-reduction;
