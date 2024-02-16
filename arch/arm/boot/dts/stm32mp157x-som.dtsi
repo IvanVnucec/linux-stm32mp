@@ -495,6 +495,24 @@
 	st,no-lsfs-sc;
 };
 
+&dcmi {
+	status = "okay";
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&dcmi_pins>;
+	pinctrl-1 = <&dcmi_sleep_pins>;
+
+	port {
+		dcmi_0: endpoint {
+			remote-endpoint = <&ov5640_0>;
+			bus-type = <5>;
+			bus-width = <8>;
+			hsync-active = <0>;
+			vsync-active = <0>;
+			pclk-sample = <1>;
+		};
+	};
+};
+
 &dfsdm {
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&dfsdm_clkout_pins_a
@@ -647,11 +665,25 @@
 	/delete-property/dmas;
 	/delete-property/dma-names;
 	status = "okay";
-	clock-frequency = <1000000>;
 
-	tpm@2e {
-		reg = <0x2e>;
-		compatible = "tcg,tpm_tis-i2c";
+	ov5640: camera@3c {
+		compatible = "ovti,ov5640";
+		reg = <0x3c>;
+		clocks = <&clk_ext_camera>;
+		clock-names = "xclk";
+		rotation = <180>;
+		status = "okay";
+
+		port {
+			ov5640_0: endpoint {
+				remote-endpoint = <&dcmi_0>;
+				bus-width = <8>;
+				data-shift = <2>; /* lines 9:2 are used */
+				hsync-active = <0>;
+				vsync-active = <0>;
+				pclk-sample = <1>;
+			};
+		};
 	};
 };
 
@@ -921,4 +953,40 @@
 				 <STM32_PINMUX('H', 8, ANALOG)>; /* I2C3_SDA */
 		};
 	};
+
+
+	dcmi_pins: dcmi-1 {
+		pins {
+			pinmux = <STM32_PINMUX('A', 4,  AF13)>,/* DCMI_HSYNC */
+				 <STM32_PINMUX('B', 7,  AF13)>,/* DCMI_VSYNC */
+				 <STM32_PINMUX('A', 6,  AF13)>,/* DCMI_PIXCLK */
+				 <STM32_PINMUX('H', 9,  AF13)>,/* DCMI_D0 */
+				 <STM32_PINMUX('H', 10, AF13)>,/* DCMI_D1 */
+				 <STM32_PINMUX('H', 11, AF13)>,/* DCMI_D2 */
+				 <STM32_PINMUX('H', 12,  AF13)>,/* DCMI_D3 */
+				 <STM32_PINMUX('H', 14, AF13)>,/* DCMI_D4 */
+				 <STM32_PINMUX('I', 4,  AF13)>,/* DCMI_D5 */
+				 <STM32_PINMUX('B', 8, AF13)>,/* DCMI_D6 */
+				 <STM32_PINMUX('E', 6,  AF13)>;/* DCMI_D7 */
+			bias-disable;
+			slew-rate = <3>;
+		};
+	};
+
+	dcmi_sleep_pins: dcmi-sleep-1 {
+		pins {
+			pinmux = <STM32_PINMUX('A', 4,  ANALOG)>,/* DCMI_HSYNC */
+				 <STM32_PINMUX('B', 7,  ANALOG)>,/* DCMI_VSYNC */
+				 <STM32_PINMUX('A', 6,  ANALOG)>,/* DCMI_PIXCLK */
+				 <STM32_PINMUX('H', 9,  ANALOG)>,/* DCMI_D0 */
+				 <STM32_PINMUX('H', 10, ANALOG)>,/* DCMI_D1 */
+				 <STM32_PINMUX('H', 11, ANALOG)>,/* DCMI_D2 */
+				 <STM32_PINMUX('H', 12,  ANALOG)>,/* DCMI_D3 */
+				 <STM32_PINMUX('H', 14, ANALOG)>,/* DCMI_D4 */
+				 <STM32_PINMUX('I', 4,  ANALOG)>,/* DCMI_D5 */
+				 <STM32_PINMUX('B', 8, ANALOG)>,/* DCMI_D6 */
+				 <STM32_PINMUX('E', 6,  ANALOG)>;/* DCMI_D7 */
+		};
+	};
+
 };
