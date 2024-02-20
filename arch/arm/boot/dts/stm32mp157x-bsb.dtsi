@@ -420,6 +420,23 @@
 	status = "okay";
 };
 
+&sdmmc3 {
+	pinctrl-names = "default", "opendrain", "sleep";
+	pinctrl-0 = <&sdmmc3_b4_pins_a>;
+	pinctrl-1 = <&sdmmc3_b4_od_pins_a>;
+	pinctrl-2 = <&sdmmc3_b4_sleep_pins_a>;
+
+	vmmc-supply = <&v3v3>;
+	vqmmc-supply = <&vdd>;
+
+	non-removable;
+	no-sd;
+	st,neg-edge;
+	bus-width = <4>;
+	mmc-ddr-3_3v;
+	status = "okay";
+};
+
 &timers6 {
 	status = "okay";
 	/* spare dmas for other usage */
@@ -437,6 +454,28 @@
 	pinctrl-2 = <&uart4_idle_pins_a>;
 	/delete-property/dmas;
 	/delete-property/dma-names;
+	status = "okay";
+};
+
+&uart7_pins_a {
+	pins1 {
+		pinmux = <STM32_PINMUX('F', 7, AF7)>, /* UART7_TX */
+		         <STM32_PINMUX('F', 8, AF7)>; /* UART7_RTS */
+		bias-disable;
+		drive-push-pull;
+		slew-rate = <0>;
+	};
+	pins2 {
+		pinmux = <STM32_PINMUX('F', 6, AF7)>, /* UART7_RX */
+		         <STM32_PINMUX('F', 9, AF7)>; /* UART7_CTS */
+		bias-disable;
+	};
+};
+
+&uart7 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart7_pins_a>;
+	uart-has-rtscts;
 	status = "okay";
 };
 
