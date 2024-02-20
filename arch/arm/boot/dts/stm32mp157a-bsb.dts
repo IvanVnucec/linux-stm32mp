@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-3-Clause)
 /*
- * Copyright (C) STMicroelectronics 2022 - All Rights Reserved
- * Author: Alexandre Torgue <alexandre.torgue@foss.st.com> for STMicroelectronics.
  * Copyright (C) Emcraft Systems 2024 - All Rights Reserved
  */
 /dts-v1/;
@@ -11,9 +9,9 @@
 #include "stm32mp15-pinctrl.dtsi"
 #include "stm32mp15xxaa-pinctrl.dtsi"
 #include "stm32mp157a-som-scmi.dtsi"
-#include "stm32mp157x-som.dtsi"
+#include "stm32mp157x-bsb.dtsi"
 
 / {
-	model = "Emcraft STM32MP157A SOM Rev 1A";
+	model = "Emcraft STM32MP1 BSB Rev 2A with STM32MP157A-SOM";
 	compatible = "emcraft,stm32mp1-som", "st,stm32mp157a-ev1", "st,stm32mp157";
 };
