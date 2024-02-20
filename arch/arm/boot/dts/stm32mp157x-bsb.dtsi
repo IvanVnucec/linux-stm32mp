@@ -110,6 +110,29 @@
 			gpios = <&gpiod 9 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "heartbeat";
 			default-state = "off";
+			status = "disabled";
+		};
+	};
+
+	user_keys {
+		compatible = "gpio-keys";
+		autorepeat;
+		status = "okay";
+
+		button-1 {
+			label = "BUTTON_1";
+			linux,code = <BTN_1>;
+			gpios = <&gpiod 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+			status = "okay";
+			wakeup-source;
+		};
+
+		button-2 {
+			label = "BUTTON_2";
+			linux,code = <BTN_2>;
+			gpios = <&gpiog 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+			status = "okay";
+			wakeup-source;
 		};
 	};
 
@@ -209,18 +232,6 @@
 			regulator-always-on;
 			regulator-boot-on;
 			gpio = <&gpiof 3 GPIO_ACTIVE_HIGH>;
-		};
-
-		sub_nrst: sub_nrst-regulator {
-			compatible = "regulator-fixed";
-			regulator-name = "sub_nrst";
-			regulator-min-microvolt = <3300000>;
-			regulator-max-microvolt = <3300000>;
-			startup-delay-us = <2000000>;
-			enable-active-high;
-			regulator-always-on;
-			regulator-boot-on;
-			gpio = <&gpiod 10 GPIO_ACTIVE_HIGH>;
 		};
 
 		usb_host_vbus: usb-host-regulator {
