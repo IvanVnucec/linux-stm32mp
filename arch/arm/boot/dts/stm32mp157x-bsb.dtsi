@@ -881,18 +881,54 @@
 	status = "okay";
 };
 
+&usart3_pins_b {
+	pins1 {
+		pinmux = <STM32_PINMUX('B', 10, AF7)>, /* USART3_TX */
+		         <STM32_PINMUX('D', 12, AF7)>; /* USART3_RTS */
+		bias-disable;
+		drive-push-pull;
+		slew-rate = <0>;
+	};
+	pins2 {
+		pinmux = <STM32_PINMUX('B', 12, AF8)>, /* USART3_RX */
+		         <STM32_PINMUX('I', 10, AF8)>; /* USART3_CTS_NSS */
+		bias-pull-up;
+	};
+};
+
+&usart3_idle_pins_b {
+	pins1 {
+		pinmux = <STM32_PINMUX('B', 10, ANALOG)>, /* USART3_TX */
+		         <STM32_PINMUX('I', 10, ANALOG)>; /* USART3_CTS_NSS */
+	};
+	pins2 {
+		pinmux = <STM32_PINMUX('D', 12, AF7)>; /* USART3_RTS */
+		bias-disable;
+		drive-push-pull;
+		slew-rate = <0>;
+	};
+	pins3 {
+		pinmux = <STM32_PINMUX('B', 12, AF8)>; /* USART3_RX */
+		bias-pull-up;
+	};
+};
+
+&usart3_sleep_pins_b {
+	pins {
+		pinmux = <STM32_PINMUX('B', 10, ANALOG)>, /* USART3_TX */
+		<STM32_PINMUX('D', 12, ANALOG)>, /* USART3_RTS */
+		<STM32_PINMUX('I', 10, ANALOG)>, /* USART3_CTS_NSS */
+		<STM32_PINMUX('B', 12, ANALOG)>; /* USART3_RX */
+	};
+};
+
 &usart3 {
 	pinctrl-names = "default", "sleep", "idle";
 	pinctrl-0 = <&usart3_pins_b>;
 	pinctrl-1 = <&usart3_sleep_pins_b>;
 	pinctrl-2 = <&usart3_idle_pins_b>;
-	/*
-	 * HW flow control USART3_RTS is optional, and isn't default wired to
-	 * the connector. SB23 needs to be soldered in order to use it, and R77
-	 * (ETH_CLK) should be removed.
-	 */
 	uart-has-rtscts;
-	status = "disabled";
+	status = "okay";
 };
 
 &dsi {
