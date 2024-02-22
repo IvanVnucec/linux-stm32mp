@@ -8,6 +8,10 @@
 #include "stm32mp15-m4-srm.dtsi"
 #include "stm32mp15-m4-srm-pinctrl.dtsi"
 
+// Un-comment the next line to enable the ADV7535 DSI-to-HDMI
+// This will disable LCD support
+//#define ENABLE_DSI_HDMI_ADAPTER 1
+
 / {
 	aliases {
 		serial0 = &uart4;
@@ -714,7 +718,7 @@
 	/delete-property/dma-names;
 	status = "okay";
 	clock-frequency = <1000000>;
-
+#if ENABLE_DSI_HDMI_ADAPTER
 	adv_bridge: adv7535@39 {
 		compatible = "adi,adv7535";
 		reg = <0x39>;
@@ -728,6 +732,7 @@
                         };
                 };
 	};
+#endif
 };
 
 &i2c3 {
@@ -779,7 +784,7 @@
 			remote-endpoint = <&panel_in_rgb>;
 		};
 	};
-
+#if ENABLE_DSI_HDMI_ADAPTER
 	port {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -787,6 +792,7 @@
 			remote-endpoint = <&dsi_in>;
 		};
 	};
+#endif
 };
 
 &m_can1 {
@@ -931,6 +937,7 @@
 	status = "okay";
 };
 
+#if ENABLE_DSI_HDMI_ADAPTER
 &dsi {
 	#address-cells = <1>;
 	#size-cells = <0>;
@@ -947,7 +954,6 @@
 			};
 		};
 
-
 		port@1 {
 			reg = <1>;
 			dsi_out: endpoint {
@@ -957,6 +963,7 @@
 		};
 	};
 };
+#endif
 
 &ethernet0_rgmii_pins_a {
 	pins1 {
