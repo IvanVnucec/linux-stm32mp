@@ -1,0 +1,13 @@
+/dts-v1/;
+
+#include "stm32mp157.dtsi"
+#include "stm32mp15xd.dtsi"
+#include "stm32mp15-pinctrl.dtsi"
+#include "stm32mp15xxaa-pinctrl.dtsi"
+#include "stm32mp157-somic-scmi.dtsi"
+#include "stm32mp157x-somic.dtsi"
+
+/ {
+	model = "STM32MP157 SOMIC";
+	compatible = "st,stm32mp157-somic", "st,stm32mp157a-ev1", "st,stm32mp157";
+};
